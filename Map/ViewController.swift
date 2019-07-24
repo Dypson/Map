@@ -14,17 +14,22 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        let latitude:CLLocationDegrees = 42.9
+        let latitude:CLLocationDegrees = 42.863
         
-        let longitude:CLLocationDegrees = -112.42
-        let latDelta:CLLocationDegrees = 0.05
-        let lonDelta:CLLocationDegrees = 0.05
+        let longitude:CLLocationDegrees = -112.434
+        let latDelta:CLLocationDegrees = 1
+        let lonDelta:CLLocationDegrees = 1
         
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lonDelta)
         
         let region = MKCoordinateRegion(center: coordinates, span: span)
      Map.setRegion(region, animated: true)
+        let annotation=MKPointAnnotation()
+        annotation.title="University Address"
+        annotation.subtitle="I will graduate soon"
+        annotation.coordinate=coordinates
+        Map.addAnnotation(annotation)
     }
 
 
