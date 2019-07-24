@@ -30,8 +30,19 @@ class ViewController: UIViewController {
         annotation.subtitle="I will graduate soon"
         annotation.coordinate=coordinates
         Map.addAnnotation(annotation)
+        let uilgr = UILongPressGestureRecognizer(target: self, action:#selector(ViewController.longpress(gestureRecognizer:)))
+        uilgr.minimumPressDuration=0.5
+        Map.addGestureRecognizer(uilgr)
     }
-
+    @objc func longpress(gestureRecognizer: UILongPressGestureRecognizer){
+        var touchpoint = gestureRecognizer.location(in: Map)
+        var newCoordinates = Map.convert(touchpoint, toCoordinateFrom: self.Map)
+        let annotation=MKPointAnnotation()
+        annotation.coordinate=newCoordinates
+        annotation.title="New Place"
+        Map.addAnnotation(annotation)
+    }
+    
 
 }
 
