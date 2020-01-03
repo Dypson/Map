@@ -8,7 +8,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseAuth
 class ViewController: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var topButton: UIButton!
@@ -26,7 +25,42 @@ class ViewController: UIViewController {
     }
     
     @IBAction func topButtonTapped(_ sender: Any) {
-        
+        if (emailTextField.text=="" || passwordTextField.text==""){
+            displayAlert(title: "Missing Information", message: "Sorry! Our record shows you haven't provided username or password or both")
+        }else{
+            if let email=emailTextField.text{
+                if let password=passwordTextField.text {
+                    if signUpMode {
+                        //Sign Up
+                        Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
+                            if(error != nil){
+                                self.displayAlert(title: "Error", message: error!.localizedDescription)
+                            }else{
+                                print("Sign up Success")
+                            }
+                        }
+                    }else{
+                        //Log in
+                        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+                            if(error != nil){
+                                self.displayAlert(title: "Error", message: error!.localizedDescription)
+                            }else{
+                                print("Login Success")
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    func displayAlert(title:String, message:String){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func downButtonTapped(_ sender: Any) {
